@@ -1,37 +1,25 @@
 const express = require("express");
+
+//* Express body-parser is an npm library used to process data sent through an HTTP request body. It  exposes four express middlewares for parsing text, JSON, url-encoded and raw data set through an HTTP request body. These middlewares are functions that process incoming requests before they reach the target controller.
+const bodyParser = require("body-parser");
+
 const app = express();
 const port = 3000;
 
+app.use(bodyParser.json());
+
 const users = [
   {
-    id: 1,
     username: "ali",
     email: "justion@gmail.com",
-    age: 24,
-    hometown: "USA",
-    language: "EN, AR, CH, SP",
-    jobTiitle: "Software Engineer",
-    Active: false,
   },
   {
-    id: 2,
     username: "ahmed",
     email: "Danial@gmail.com",
-    age: 54,
-    hometown: "KSA",
-    language: "EN",
-    jobTiitle: "Lawyer",
-    Active: false,
   },
   {
-    id: 3,
     username: "jad",
     email: "Kiki@gmail.com",
-    age: 14,
-    hometown: "United Kingdom",
-    language: "EN, SP",
-    jobTiitle: "Student",
-    Active: true,
   },
 ];
 
@@ -48,12 +36,23 @@ app.get("/admin/dashboard", (req, res) => {
 });
 
 app.get("/users", (req, res) => {
-  res.send("<h1>users page response</h1>");
+  res.json({ users: users });
+});
+
+app.post("/users", (req, res) => {
+  const user = {
+    username: req.body.username,
+    email: req.body.email,
+  };
+  users.push(user);
+  console.log(user);
+  res.json({ user: user });
 });
 
 app.get("/user/:username", (req, res) => {
   const username = req.params.username;
   const user = users.find((obj) => obj.username == username);
+  console.log(user);
 
   if (user === undefined) {
     res.send("404, Sorry! user not found!");
