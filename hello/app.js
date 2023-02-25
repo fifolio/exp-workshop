@@ -65,6 +65,21 @@ app.delete("/users/:username", (req, res) => {
     const index = users.indexOf(user);
     users.splice(index, 1);
     console.log("user deleted");
+    res.send("user deleted");
+  }
+});
+
+//* A patch is a partial update descriptor, expressed in JSON or XML. A patch tells MarkLogic Server what update to apply and where to apply it.
+app.patch("/users/:username", (req, res) => {
+  const username = req.params.username;
+  const user = users.find((obj) => obj.username === username);
+  if (user === undefined) {
+    console.log("user not found");
+  } else {
+    user.username = req.body.username ? req.body.username : user.username;
+    user.email = req.body.email ? req.body.email : user.email;
+    console.log("updated");
+    res.send("updated");
   }
 });
 
