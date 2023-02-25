@@ -23,16 +23,12 @@ const users = [
   },
 ];
 
+let home = `
+  <h1>Welcome to my home page</h1>
+`;
+
 app.get("/", (req, res) => {
-  res.send("Hello express");
-});
-
-app.get("/admin", (req, res) => {
-  res.send("You in the Admin area");
-});
-
-app.get("/admin/dashboard", (req, res) => {
-  res.send("<h1>you are now in the dashboard</h1>");
+  res.send(`${home}`);
 });
 
 app.get("/users", (req, res) => {
@@ -49,15 +45,26 @@ app.post("/users", (req, res) => {
   res.json({ user: user });
 });
 
-app.get("/user/:username", (req, res) => {
+app.get("/users/:username", (req, res) => {
   const username = req.params.username;
   const user = users.find((obj) => obj.username == username);
   console.log(user);
-
   if (user === undefined) {
     res.send("404, Sorry! user not found!");
   } else {
     res.send(user);
+  }
+});
+
+app.delete("/users/:username", (req, res) => {
+  const username = req.params.username;
+  const user = users.find((obj) => obj.username == username);
+  if (user === undefined) {
+    res.send("404, Sorry! user not found!");
+  } else {
+    const index = users.indexOf(user);
+    users.splice(index, 1);
+    console.log("user deleted");
   }
 });
 
