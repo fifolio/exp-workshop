@@ -10,6 +10,15 @@ const controller = require("./controllers/posts");
 // DATA
 const posts = require("./models/data");
 
+// MIDDLEWARES
+const mid1 = (req, res, next) => {
+  console.log(req.url);
+  next();
+};
+
+// PASSING MIDDLEWARE TO ALL ROUTES
+app.use(mid1);
+
 app.get("/posts", controller.getAll);
 app.get("/posts/:id", controller.getOne);
 app.delete("/posts/:id", controller.deleteOne);
