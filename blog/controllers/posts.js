@@ -38,6 +38,20 @@ const controller = {
       res.send("post not found");
     }
   },
+
+  addOne: (req, res) => {
+    // Get post.id to update
+    const oldId = posts.length - 1;
+    const newId = posts[oldId].id + 1;
+    const post = {
+      userId: 1,
+      id: newId,
+      title: req.body.title ? req.body.title : "post title",
+      body: req.body.body ? req.body.body : "post body",
+    };
+    posts.push(post);
+    res.send("Post Added");
+  },
 };
 
 module.exports = controller;

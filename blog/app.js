@@ -14,6 +14,7 @@ app.get("/posts", controller.getAll);
 app.get("/posts/:id", controller.getOne);
 app.delete("/posts/:id", controller.deleteOne);
 app.patch("/posts/:id", controller.updateOne);
+app.post("/posts/", controller.addOne);
 
 app.listen(port, () => {
   console.log(`we are connected at port ${port}`);
