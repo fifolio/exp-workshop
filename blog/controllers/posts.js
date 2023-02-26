@@ -13,6 +13,18 @@ const controller = {
       res.send(`post not found `);
     }
   },
+
+  deleteOne: (req, res) => {
+    const post = posts.find((post) => post.id == req.params.id);
+    if (post) {
+      const index = posts.indexOf(post);
+      posts.splice(index, 1);
+      res.send(`Post is Deleted.`);
+    } else {
+      res.send("post not found");
+    }
+    res.send(`${post} deleted`);
+  },
 };
 
 module.exports = controller;
