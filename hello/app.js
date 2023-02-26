@@ -2,10 +2,8 @@ const express = require("express");
 
 //* Express body-parser is an npm library used to process data sent through an HTTP request body. It  exposes four express middlewares for parsing text, JSON, url-encoded and raw data set through an HTTP request body. These middlewares are functions that process incoming requests before they reach the target controller.
 const bodyParser = require("body-parser");
-
 const app = express();
 const port = 3000;
-
 app.use(bodyParser.json());
 
 const users = [
@@ -23,9 +21,7 @@ const users = [
   },
 ];
 
-let home = `
-  <h1>Welcome to my home page</h1>
-`;
+let home = `<h1>Welcome to my home page</h1>`;
 
 app.get("/", (req, res) => {
   res.send(`${home}`);
