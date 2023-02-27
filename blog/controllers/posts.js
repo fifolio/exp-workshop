@@ -2,7 +2,14 @@ const posts = require("../models/data");
 
 const controller = {
   getAll: (req, res) => {
-    res.send(posts);
+    const itemsPerPage = 10;
+    const requestedPage = req.query.page - 1 || 0;
+    const startIndex = requestedPage * itemsPerPage;
+    const endIndex = itemsPerPage + startIndex;
+    const paginatedPosts = posts.filter(
+      (post, index) => index >= startIndex && index < endIndex
+    );
+    res.send(paginatedPosts);
   },
 
   getOne: (req, res) => {
