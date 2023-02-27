@@ -30,8 +30,8 @@ const controller = {
     if (post) {
       post.userId = post.userId; //! This value is auto-generate
       post.id = post.id; //! This value is auto-generate
-      post.title = req.body.title ? req.body.title : post.title;
-      post.body = req.body.body ? req.body.body : post.body;
+      post.title = req.body.title ? req.body.title.trim() : post.title;
+      post.body = req.body.body ? req.body.body.trim() : post.body;
       res.send(post);
     } else {
       res.send("post not found");
@@ -45,8 +45,8 @@ const controller = {
     const post = {
       userId: 1,
       id: newId,
-      title: req.body.title ? req.body.title : "post title",
-      body: req.body.body ? req.body.body : "post body",
+      title: req.body.title ? req.body.title.trim() : "post title",
+      body: req.body.body ? req.body.body.trim() : "post body",
     };
     posts.push(post);
     res.send("Post Added");

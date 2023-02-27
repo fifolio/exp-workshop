@@ -13,26 +13,38 @@ const rules = {
     }
   },
   title: (req, res, next) => {
-    const title = req.body.title ? req.body.title.trim() : undefined;
-    if (title) {
-      if (title.length < 7 || title.length > 70) {
+    if (req.body.title) {
+      if (req.body.title.length < 7 || req.body.title.length > 70) {
         next({
-          name: "validation Error",
+          name: "Validation Error",
           element: "body: title",
-          msg: "The title must be a between 7 and 70 chars",
+          message: "The title length should be between 7 and 70 chars",
         });
       }
-    } else {
-      res.send("updated");
       next();
     }
+    next();
+  },
+  body: (req, res, next) => {
+    if (req.body.body) {
+      const body = req.body.body.trim();
+      if (body.length < 7 || body.length > 2000) {
+        next({
+          name: "Validation Error",
+          element: "body: body",
+          message: "The post body length should be between 7 and 2000 chars",
+        });
+      }
+      next();
+    }
+    next();
   },
 };
 
 const validate = {
   getOne: [rules.id],
-  addOne: [],
-  updateOne: [rules.id, rules.title],
+  addOne: [rules.title, rules.body],
+  updateOne: [rules.id, rules.title, rules.body],
   deleteOne: [rules.id],
 };
 
