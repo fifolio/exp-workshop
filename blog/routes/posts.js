@@ -2,30 +2,19 @@
 const express = require("express");
 const app = express;
 
-// CONTROLLERS
-const controller = require("../controllers/posts");
-
 // ROUTES
 const route = app.Router();
 
-const validateId = (req, res, next) => {
-  const id = req.params.id;
-  const pattern = /^[1-9]{1,3}$/
-  if (pattern.test(id)) {
-    next();
-  } else {
-    next({
-      name: "validation Error",
-      element: "params: id",
-      msg: "The post id must be a number from 1-999",
-    });
-  }
-};
+// VVALIDATION
+const validate = require("../middlewares/validation/posts");
+
+// CONTROLLERS
+const controller = require("../controllers/posts");
 
 route.get("/", controller.getAll);
-route.get("/:id", [validateId], controller.getOne);
-route.delete("/:id", controller.deleteOne);
-route.patch("/:id", controller.updateOne);
-route.post("/", controller.addOne);
+route.get("/:id", validate.getOne, controller.getOne);
+route.delete("/:id", validate.deleteOne, controller.deleteOne);
+route.patch("/:id", validate.updateOne, controller.updateOne);
+route.post("/", validate.addOne, controller.addOne);
 
 module.exports = route;

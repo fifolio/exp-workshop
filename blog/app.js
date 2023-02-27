@@ -4,13 +4,14 @@ const port = 3000;
 const bodyParser = require("body-parser");
 const postsRouter = require("./routes/posts");
 
-app.use(bodyParser.json());
-app.use("/posts", postsRouter);
-
 const errMiddleware = (err, req, res, next) => {
   res.status(400).json({ err: err });
 };
+
+//* use() is used to bind *application-level middleware to an instance of the app object which is instantiated on the creation of the Express server
 app.use(errMiddleware);
+app.use(bodyParser.json());
+app.use("/posts", postsRouter);
 
 app.listen(port, () => {
   console.log(`we are connected at port ${port}`);

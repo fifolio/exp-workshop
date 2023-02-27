@@ -23,14 +23,13 @@ const controller = {
     } else {
       res.send("post not found");
     }
-    res.send(`${post} deleted`);
   },
 
   updateOne: (req, res) => {
     const post = posts.find((post) => post.id == req.params.id);
     if (post) {
-      post.userId = post.userId;
-      post.id = post.id;
+      post.userId = post.userId; //! This value is auto-generate
+      post.id = post.id; //! This value is auto-generate
       post.title = req.body.title ? req.body.title : post.title;
       post.body = req.body.body ? req.body.body : post.body;
       res.send(post);
