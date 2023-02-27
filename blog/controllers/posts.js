@@ -6,6 +6,8 @@ const controller = {
     const requestedPage = req.query.page - 1 || 0;
     const startIndex = requestedPage * itemsPerPage;
     const endIndex = itemsPerPage + startIndex;
+    console.log(startIndex);
+    console.log(endIndex);
     const paginatedPosts = posts.filter(
       (post, index) => index >= startIndex && index < endIndex
     );
@@ -17,7 +19,7 @@ const controller = {
     if (post) {
       res.send(post);
     } else {
-      res.send(`post not found `);
+      res.send(`post not found`);
     }
   },
 
