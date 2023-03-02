@@ -4,14 +4,14 @@ const controller = {
   getAll: (req, res) => {
     const itemsPerPage = 10;
     const requestedPage = req.query.page - 1 || 0;
+    const pagesCount = Math.ceil(posts.length / itemsPerPage);
     const startIndex = requestedPage * itemsPerPage;
     const endIndex = itemsPerPage + startIndex;
-    console.log(startIndex);
-    console.log(endIndex);
     const paginatedPosts = posts.filter(
       (post, index) => index >= startIndex && index < endIndex
     );
-    res.send(paginatedPosts);
+    // res.send(paginatedPosts, pagesCount);
+    res.status(200).json({ posts: paginatedPosts , pagesCount});
   },
 
   getOne: (req, res) => {
